@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package rpn;
 
 import java.awt.event.*;
@@ -21,9 +17,8 @@ public class Calculator extends JFrame implements ActionListener {
     static JTextField l;
  
     // store operator and operands
-    String str;
+    private String str;
     
-    int count = 0;
     
     
     // default constructor
@@ -143,14 +138,46 @@ public class Calculator extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
+        String resultstr;
         double d;
         
-        this.str += ' ' + s;
         
-
-        d = RPN.evaluate(s);
-        String resultstr = d+"";
-        System.out.println(this.str);
-        l.setText(str);
+        if ("C".equals(s)){
+            this.str = "";
+            l.setText(str);
+        }
+        
+        else if("space".equals(s)){
+            this.str += " ";
+            l.setText(str);
+        }
+        
+        else if ("=".equals(s)){
+            try{
+                d = RPN.evaluate(str);
+                resultstr = (d%1==0) ? String.format("%.0f", d) : d+"";
+                System.out.println("---- (Calculator) resultstr (evaluate return) -------");
+                System.out.println(resultstr);
+                str = resultstr;
+                l.setText(str);
+            }
+            catch(Exception exc){
+                System.out.println(exc);
+                this.str = "";
+                l.setText("error");
+            }
+        }
+        else {
+            if ("0".equals(this.str)){
+                this.str = "";
+                l.setText(str);
+            }
+            else{
+                this.str += s;
+            }
+            System.out.println("---- (Calculator) string aft pressing last button -------");
+            System.out.println(this.str);
+            l.setText(str);
+            }
         }
     }
