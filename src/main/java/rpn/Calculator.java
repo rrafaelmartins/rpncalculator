@@ -51,7 +51,8 @@ public class Calculator extends JFrame implements ActionListener {
  
         // create number buttons and some operators
         JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bPI, 
-                ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1, bspace;
+                ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1, bspace,
+                bbackspace;
  
         // create number buttons
         b0 = new JButton("0");
@@ -85,30 +86,72 @@ public class Calculator extends JFrame implements ActionListener {
         
         //create "space" button
         bspace = new JButton("space");
+        
+        //create "backspace" button
+        bbackspace = new JButton("backspace");
  
         // create a panel
         JPanel p = new JPanel();
  
         // add action listeners
         bm.addActionListener(c);
+        bm.setMnemonic(KeyEvent.VK_MULTIPLY);
         bd.addActionListener(c);
+        bm.setMnemonic(KeyEvent.VK_DIVIDE);
         bs.addActionListener(c);
+        bs.setMnemonic(KeyEvent.VK_SUBTRACT);
         ba.addActionListener(c);
+        ba.setMnemonic(KeyEvent.VK_ADD);
         bPI.addActionListener(c);
+        
         b9.addActionListener(c);
+        b9.setMnemonic(KeyEvent.VK_9);
+        b9.setMnemonic(KeyEvent.VK_NUMPAD9);
+        
         b8.addActionListener(c);
+        b8.setMnemonic(KeyEvent.VK_8);
+        b8.setMnemonic(KeyEvent.VK_NUMPAD8);
+        
         b7.addActionListener(c);
+        b7.setMnemonic(KeyEvent.VK_7);
+        b7.setMnemonic(KeyEvent.VK_NUMPAD7);
+        
         b6.addActionListener(c);
+        b6.setMnemonic(KeyEvent.VK_6);
+        b6.setMnemonic(KeyEvent.VK_NUMPAD6);
+        
         b5.addActionListener(c);
+        b5.setMnemonic(KeyEvent.VK_5);
+        b5.setMnemonic(KeyEvent.VK_NUMPAD5);
+        
         b4.addActionListener(c);
+        b4.setMnemonic(KeyEvent.VK_4);
+        b4.setMnemonic(KeyEvent.VK_NUMPAD4);
+        
         b3.addActionListener(c);
+        b3.setMnemonic(KeyEvent.VK_3);
+        b3.setMnemonic(KeyEvent.VK_NUMPAD3);
+        
         b2.addActionListener(c);
+        b2.setMnemonic(KeyEvent.VK_2);
+        b2.setMnemonic(KeyEvent.VK_NUMPAD2);
+  
         b1.addActionListener(c);
+        b1.setMnemonic(KeyEvent.VK_1);
+        b1.setMnemonic(KeyEvent.VK_NUMPAD1);
+        
         b0.addActionListener(c);
+        b0.setMnemonic(KeyEvent.VK_0);
+        b0.setMnemonic(KeyEvent.VK_NUMPAD0);
+        
         be.addActionListener(c);
+        be.setMnemonic(KeyEvent.VK_DECIMAL);
         beq.addActionListener(c);
         beq1.addActionListener(c);
         bspace.addActionListener(c);
+        bspace.setMnemonic(KeyEvent.VK_SPACE);
+        bbackspace.addActionListener(c);
+        bbackspace.setMnemonic(KeyEvent.VK_BACK_SPACE);
         bpow.addActionListener(c);
         bsqrt.addActionListener(c);
         bfact.addActionListener(c);
@@ -136,6 +179,7 @@ public class Calculator extends JFrame implements ActionListener {
         p.add(beq);
         p.add(beq1);
         p.add(bspace);
+        p.add(bbackspace);
         p.add(bpow);
         p.add(bsqrt);
         p.add(bfact);
@@ -165,6 +209,13 @@ public class Calculator extends JFrame implements ActionListener {
         
         else if("space".equals(s)){
             this.str += " ";
+            l.setText(str);
+        }
+        
+        else if("backspace".equals(s)){
+            StringBuilder pop = new StringBuilder(str);
+            pop.deleteCharAt(str.length()-1);
+            this.str = pop+"";
             l.setText(str);
         }
         
@@ -216,4 +267,5 @@ public class Calculator extends JFrame implements ActionListener {
             l.setText(str);
             }
         }
+    
     }
