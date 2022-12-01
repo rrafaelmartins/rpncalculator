@@ -50,7 +50,8 @@ public class Calculator extends JFrame implements ActionListener {
         l.setEditable(false);
  
         // create number buttons and some operators
-        JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bs, bd, bm, be, beq, beq1, bspace;
+        JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bPI, 
+                ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1, bspace;
  
         // create number buttons
         b0 = new JButton("0");
@@ -63,6 +64,7 @@ public class Calculator extends JFrame implements ActionListener {
         b7 = new JButton("7");
         b8 = new JButton("8");
         b9 = new JButton("9");
+        bPI = new JButton("𝜋");
  
         // equals button
         beq1 = new JButton("=");
@@ -72,6 +74,10 @@ public class Calculator extends JFrame implements ActionListener {
         bs = new JButton("-");
         bd = new JButton("/");
         bm = new JButton("*");
+        bpow = new JButton("x²");
+        bsqrt = new JButton("sqrt");
+        bfact = new JButton("x!");
+        blog = new JButton("log");
         beq = new JButton("C");
  
         // create . button
@@ -88,6 +94,7 @@ public class Calculator extends JFrame implements ActionListener {
         bd.addActionListener(c);
         bs.addActionListener(c);
         ba.addActionListener(c);
+        bPI.addActionListener(c);
         b9.addActionListener(c);
         b8.addActionListener(c);
         b7.addActionListener(c);
@@ -102,6 +109,10 @@ public class Calculator extends JFrame implements ActionListener {
         beq.addActionListener(c);
         beq1.addActionListener(c);
         bspace.addActionListener(c);
+        bpow.addActionListener(c);
+        bsqrt.addActionListener(c);
+        bfact.addActionListener(c);
+        blog.addActionListener(c);
  
         // add elements to panel
         p.add(l);
@@ -116,6 +127,7 @@ public class Calculator extends JFrame implements ActionListener {
         p.add(b8);
         p.add(b9);
         p.add(b0);
+        p.add(bPI);
         p.add(ba);
         p.add(bs);
         p.add(bd);
@@ -124,9 +136,13 @@ public class Calculator extends JFrame implements ActionListener {
         p.add(beq);
         p.add(beq1);
         p.add(bspace);
+        p.add(bpow);
+        p.add(bsqrt);
+        p.add(bfact);
+        p.add(blog);
  
         // set Background of panel
-        p.setBackground(Color.green);
+        p.setBackground(Color.white);
  
         // add panel to frame
         f.add(p);
@@ -149,6 +165,26 @@ public class Calculator extends JFrame implements ActionListener {
         
         else if("space".equals(s)){
             this.str += " ";
+            l.setText(str);
+        }
+        
+        else if("x²".equals(s)){
+            this.str += "^";
+            l.setText(str);
+        }
+        
+        else if("sqrt".equals(s)){
+            this.str += "sqrt";
+            l.setText(str);
+        }
+        
+        else if("x!".equals(s)){
+            this.str += "!";
+            l.setText(str);
+        }
+        
+        else if("𝜋".equals(s)){
+            this.str += "pi";
             l.setText(str);
         }
         

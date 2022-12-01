@@ -50,5 +50,8 @@ public class TestStack {
         //
         Stack emptyStack = new Stack();
         emptyStack.pop();
+        
+        String expr = "7 3.14159265359 *";
+        System.out.println(expr.length());
     }
 }
