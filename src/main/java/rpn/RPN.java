@@ -34,6 +34,9 @@ class RPN {
             if ("pi".equals(current)){
                 current = pi+"";
             }
+            else if ("-pi".equals(current)){
+                current = -pi+"";
+            }
             if(("+-*/^".indexOf(current.charAt(0)) != -1) && (current.length() == 1) && (expr.length() > last.length() + 2)) //check if current is a two number operator and if it's NOT a unary negative
             {   //pop 2 and apply operation
                 Double a = stack.pop();
