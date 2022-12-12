@@ -1,3 +1,6 @@
+//DONE 07/12: Implemented imaginary switch
+//TO-D0: imaginary switch must switch between ImaginaryRPN evaluate method and RPN evaluate method. Interface may be useless
+
 package rpn;
 
 import java.awt.event.*;
@@ -18,6 +21,9 @@ public class Calculator extends JFrame implements ActionListener {
  
     // store operator and operands
     private String str;
+    
+    //boolean to say if it's in Real or Imaginary
+    private boolean img = false;
     
     
     
@@ -52,7 +58,7 @@ public class Calculator extends JFrame implements ActionListener {
         // create number buttons and some operators
         JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bPI, 
                 ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1, bspace,
-                bbackspace;
+                bbackspace, benter, bimg;
  
         // create number buttons
         b0 = new JButton("0");
@@ -84,11 +90,17 @@ public class Calculator extends JFrame implements ActionListener {
         // create . button
         be = new JButton(".");
         
+        //create "enter" button
+        benter = new JButton("ENTER");
+        
         //create "space" button
         bspace = new JButton("space");
         
         //create "backspace" button
         bbackspace = new JButton("backspace");
+        
+        //create imaginary switch
+        bimg = new JButton("i");
  
         // create a panel
         JPanel p = new JPanel();
@@ -152,10 +164,13 @@ public class Calculator extends JFrame implements ActionListener {
         bspace.setMnemonic(KeyEvent.VK_SPACE);
         bbackspace.addActionListener(c);
         bbackspace.setMnemonic(KeyEvent.VK_BACK_SPACE);
+        benter.addActionListener(c);
+        benter.setMnemonic(KeyEvent.VK_ENTER);
         bpow.addActionListener(c);
         bsqrt.addActionListener(c);
         bfact.addActionListener(c);
         blog.addActionListener(c);
+        bimg.addActionListener(c);
  
         // add elements to panel
         p.add(l);
@@ -180,10 +195,12 @@ public class Calculator extends JFrame implements ActionListener {
         p.add(beq1);
         p.add(bspace);
         p.add(bbackspace);
+        p.add(benter);
         p.add(bpow);
         p.add(bsqrt);
         p.add(bfact);
         p.add(blog);
+        p.add(bimg);
  
         // set Background of panel
         p.setBackground(Color.white);
@@ -200,14 +217,15 @@ public class Calculator extends JFrame implements ActionListener {
         String s = e.getActionCommand();
         String resultstr;
         double d;
+        String result;
         
-        
+        //managing non-numeric inputs
         if ("C".equals(s)){
             this.str = "";
             l.setText(str);
         }
         
-        else if("space".equals(s)){
+        else if("ENTER".equals(s)){
             this.str += " ";
             l.setText(str);
         }
@@ -235,23 +253,44 @@ public class Calculator extends JFrame implements ActionListener {
         }
         
         else if("𝜋".equals(s)){
-            this.str += "pi";
+            this.str += "PI";
             l.setText(str);
         }
         
+        else if("imaginary mode".equals(s)){
+            img = true;
+        }
+        
         else if ("=".equals(s)){
-            try{
-                d = RPN.evaluate(str);
-                resultstr = (d%1==0) ? String.format("%.0f", d) : d+"";
-                System.out.println("---- (Calculator) resultstr (evaluate return) -------");
-                System.out.println(resultstr);
-                str = resultstr;
+            if (this.str.contains("i")){
+                try{
+                result = ImaginaryRPN.evaluate2(str);
+                //resultstr = (d%1==0) ? String.format("%.0f", d) : d+"";
+                //System.out.println("---- (Calculator) resultstr (evaluate return) -------");
+                //System.out.println(resultstr);
+                str = result;
                 l.setText(str);
             }
             catch(Exception exc){
                 System.out.println(exc);
                 this.str = "";
                 l.setText("error");
+                }
+            }
+            else{
+                try{
+                    d = RPN.evaluate(str);
+                    resultstr = (d%1==0) ? String.format("%.0f", d) : d+"";
+                    System.out.println("---- (Calculator) resultstr (evaluate return) -------");
+                    System.out.println(resultstr);
+                    str = resultstr;
+                    l.setText(str);
+                }
+                catch(Exception exc){
+                    System.out.println(exc);
+                    this.str = "";
+                    l.setText("error");
+                }
             }
         }
         else {

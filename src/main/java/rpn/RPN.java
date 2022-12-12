@@ -8,6 +8,8 @@ import java.util.*;
  * @author rafae
  */
 class RPN {
+       
+
     
     public static double evaluate(String expr) {
         System.out.println("---- (RPN) expression arg -------");
@@ -15,6 +17,7 @@ class RPN {
         String last = "";
         double pi = 3.14159265359;
         String pistring = pi+"";
+        boolean imaginary = false;
         
         if (expr.isEmpty()) return 0;
 
@@ -28,13 +31,20 @@ class RPN {
             int space = expr.substring(start).indexOf(' ');
             int end = (space == -1) ? expr.length() : start + space; //if method indexOf() returns -1 => no match found
             String current = expr.substring(start,end); //current number or operator
+            if (current.contains("i")){
+                System.out.println("entrou");
+                imaginary = true;
+            }
+            else{
+                imaginary = false;
+            }
             System.out.println(current);
             System.out.println(expr.length());
             System.out.println(last.length());
-            if ("pi".equals(current)){
+            if ("PI".equals(current)){
                 current = pi+"";
             }
-            else if ("-pi".equals(current)){
+            else if ("-PI".equals(current)){
                 current = -pi+"";
             }
             if(("+-*/^".indexOf(current.charAt(0)) != -1) && (current.length() == 1) && (expr.length() > last.length() + 2)) //check if current is a two number operator and if it's NOT a unary negative
@@ -42,27 +52,32 @@ class RPN {
                 Double a = stack.pop();
                 Double b = stack.pop();
                 stack.push(operate(current.charAt(0),b,a)); //push operation result to stack
+
             }
             else if(("-".indexOf(current.charAt(0)) != -1) && (current.length() == 1) && (expr.length() == last.length() + 2)) //check if it's a unary minus
             {   //pop 2 and apply operation
                 Double a = stack.pop();
                 Character operand = 'u';
                 stack.push(operate(operand,a,-1)); //push operation result to stack
+
             }
             else if ("sqrt".indexOf(current.charAt(0)) != -1){ //check if current is unary operator
                 Double a = stack.pop();
                 Character operand = 'r';
                 stack.push(operate(operand,a,0.5));
+
             }
             else if ("!".indexOf(current.charAt(0)) != -1){
                 Double a = stack.pop();
                 Character operand = '!';
                 stack.push(operate(operand,a, 0));
+
             }
             else if ("log".indexOf(current.charAt(0)) != -1){
                 Double a = stack.pop();
                 Character operand = 'l';
                 stack.push(operate(operand,a, 0));
+
             }
             else if ("=".equals(current)){
                 start = end + 1;//start over at index after the space
@@ -73,10 +88,13 @@ class RPN {
             {
                 System.out.println("here");
                 if (pistring.equals(current)){
-                    last = "pi";
+                    last = "PI";
                 }
                 else{
                     last = current;
+                }
+                if (imaginary = true){
+                    
                 }
                 stack.push(Double.parseDouble(current));
             }
@@ -104,7 +122,7 @@ class RPN {
     
     //return a <operand> b
     public static double operate(char operand,double a, double b){
-
+        
         Hashtable<Character,Double> opHash = new Hashtable<Character,Double>();
         opHash.put('+',a + b);
         opHash.put('-',a - b);
