@@ -21,10 +21,11 @@ public class ImaginaryRPN extends RPN{
         System.out.println(expr);
         String last = "";
         String[] currentNum;
-        String currentReal;
         String result;
         int countImg =0 ;
         int countReal = 0;
+        double resultReal = 0;
+        double resultImg = 0;
         //List <Double> real = new ArrayList <Double>();
         
         if (expr.isEmpty()) return "0";
@@ -46,8 +47,9 @@ public class ImaginaryRPN extends RPN{
 
             if(("+-*/^".indexOf(current.charAt(0)) != -1) && (current.length() == 1) && (expr.length() > last.length() + 2) && (current.contains("i") == false)) //check if current is a two number operator and if it's NOT a unary negative
             {   //pop 2 and apply operation
-                System.out.println("aaaaaaaa");
-                if (countImg > 1){
+                //System.out.println("aaaaaaaa");
+                if ((countImg == 2) && (countReal ==2)){
+                    System.out.println("2 e 2");
                     Double a = stackReal.pop();
                     Double b = stackReal.pop();
                     Double c = stackImg.pop();
@@ -55,21 +57,38 @@ public class ImaginaryRPN extends RPN{
                     stackReal.push(operate(current.charAt(0),b,a)); //push operation result to stack
                     stackImg.push(operate(current.charAt(0), c, d));
                 }
-                if (countReal > 1){
+                else if ((countImg == 2) && (countReal == 1)){
+                    System.out.println("2 e 1");
                     Double a = stackReal.pop();
                     Double c = stackImg.pop();
                     Double d = stackImg.pop();
                     stackReal.push(operate(current.charAt(0),0,a)); //push operation result to stack
                     stackImg.push(operate(current.charAt(0), c, d));
                 }
-                else{
+                else if ((countImg == 2) && (countReal == 0)){
+                    System.out.println("2 e 0");
+
+                    Double c = stackImg.pop();
+                    Double d = stackImg.pop();
+                    stackImg.push(operate(current.charAt(0), c, d));
+                }
+                else if((countImg == 1) && (countReal == 2)){
+                    System.out.println("1 e 2");
+
                     Double a = stackReal.pop();
                     Double b = stackReal.pop();
                     Double c = stackImg.pop();
                     stackReal.push(operate(current.charAt(0),b,a)); //push operation result to stack
                     stackImg.push(operate(current.charAt(0), c, 0));
                 }
+                else{
+                    System.out.println("1 e 1");
 
+                    Double a = stackReal.pop();
+                    Double c = stackImg.pop();
+                    stackReal.push(operate(current.charAt(0),0,a)); //push operation result to stack
+                    stackImg.push(operate(current.charAt(0), c, 0));
+                }
             }
             else if(("-".indexOf(current.charAt(0)) != -1) && (current.length() == 1) && (expr.length() == last.length() + 2)) //check if it's a unary minus
             {   //pop 2 and apply operation
@@ -86,7 +105,7 @@ public class ImaginaryRPN extends RPN{
             
             else //otherwise, push the number to stack
             {
-                System.out.println("here");
+                //System.out.println("here");
                 if (current.contains("i")){
                     currentNum = current.split("i");
                     System.out.println(currentNum[0]);
@@ -99,20 +118,37 @@ public class ImaginaryRPN extends RPN{
                     stackImg.push(Double.parseDouble(currentNum[0]));
                     
                     countImg += 1;
+                    System.out.println("---------------------------");
+                    System.out.println(countReal);
+                    System.out.println(countImg);
                 }
                 else{
-                stackReal.push(Double.parseDouble(current));
+                    stackReal.push(Double.parseDouble(current));
+                    countReal += 1;
+                    System.out.println("---------------------------");
+                    System.out.println(countReal);
+                    System.out.println(countImg);
                 }
             }
             start = end + 1;//start over at index after the space
         }while(start < expr.length());
         
         System.out.println("---- (RPN) stack aft evaluate -------");
-        stackReal.print();
         System.out.println("------------------------------");
-
-        double resultReal = stackReal.pop(); //gets result of last operation by popping it and storing in "result" attribute
-        double resultImg = stackImg.pop(); 
+        
+        if ((countReal > 0) && (countImg > 0)){
+            resultReal = stackReal.pop(); //gets result of last operation by popping it and storing in "result" attribute
+            resultImg = stackImg.pop(); 
+        }
+        else if ((countReal > 0) && (countImg == 0)){
+            resultReal = stackReal.pop(); //gets result of last operation by popping it and storing in "result" attribute
+        }
+        else if ((countReal == 0) && (countImg > 0)){
+            resultImg = stackImg.pop(); //gets result of last operation by popping it and storing in "result" attribute
+        }
+        
+       
+        
         System.out.println(resultReal);
         System.out.println(resultImg);
         

@@ -48,6 +48,7 @@ public class Stack {
         top = top.getNext();
         size--;
         return data;
+
     }
     //print stack to console, point at top element
     public void print() {

@@ -1,5 +1,4 @@
-//DONE 07/12: Implemented imaginary switch
-//TO-D0: imaginary switch must switch between ImaginaryRPN evaluate method and RPN evaluate method. Interface may be useless
+
 
 package rpn;
 
@@ -57,7 +56,7 @@ public class Calculator extends JFrame implements ActionListener {
  
         // create number buttons and some operators
         JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, bPI, 
-                ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1, bspace,
+                ba, bs, bd, bm, bpow, bsqrt, bfact, blog, be, beq, beq1,
                 bbackspace, benter, bimg;
  
         // create number buttons
@@ -93,8 +92,6 @@ public class Calculator extends JFrame implements ActionListener {
         //create "enter" button
         benter = new JButton("ENTER");
         
-        //create "space" button
-        bspace = new JButton("space");
         
         //create "backspace" button
         bbackspace = new JButton("backspace");
@@ -160,8 +157,6 @@ public class Calculator extends JFrame implements ActionListener {
         be.setMnemonic(KeyEvent.VK_DECIMAL);
         beq.addActionListener(c);
         beq1.addActionListener(c);
-        bspace.addActionListener(c);
-        bspace.setMnemonic(KeyEvent.VK_SPACE);
         bbackspace.addActionListener(c);
         bbackspace.setMnemonic(KeyEvent.VK_BACK_SPACE);
         benter.addActionListener(c);
@@ -171,6 +166,7 @@ public class Calculator extends JFrame implements ActionListener {
         bfact.addActionListener(c);
         blog.addActionListener(c);
         bimg.addActionListener(c);
+        bimg.setMnemonic(KeyEvent.VK_I);
  
         // add elements to panel
         p.add(l);
@@ -193,7 +189,6 @@ public class Calculator extends JFrame implements ActionListener {
         p.add(be);
         p.add(beq);
         p.add(beq1);
-        p.add(bspace);
         p.add(bbackspace);
         p.add(benter);
         p.add(bpow);
