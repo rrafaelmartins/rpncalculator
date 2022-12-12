@@ -13,10 +13,10 @@ import java.awt.*;
 public class Calculator extends JFrame implements ActionListener {
 
     // create a frame
-    static JFrame f;
+    private static JFrame f;
  
     // create a textfield
-    static JTextField l;
+    private static JTextField l;
  
     // store operator and operands
     private String str;
