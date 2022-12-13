@@ -32,15 +32,12 @@ class RPN {
             int end = (space == -1) ? expr.length() : start + space; //if method indexOf() returns -1 => no match found
             String current = expr.substring(start,end); //current number or operator
             if (current.contains("i")){
-                System.out.println("entrou");
                 imaginary = true;
             }
             else{
                 imaginary = false;
             }
             System.out.println(current);
-            System.out.println(expr.length());
-            System.out.println(last.length());
             if ("PI".equals(current)){
                 current = pi+"";
             }
